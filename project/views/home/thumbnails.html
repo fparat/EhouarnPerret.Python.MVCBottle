@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+             <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+              <h1 class="display-4">Gallery</h1>
+              <p class="lead">Quickly get scammed by our team of expertuhs :-)</p>
+              <p class="lead">It's built with default Bootstrap components and utilities with little customization, cause we are LAYY-ZYYY!</p>
+        </div>
+    </div>
+</div>
+
+<div class="py-5 bg-light rounded">
+    <div class="container">
+      <div class="row">
+        % for i in range(1, 10):
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/thumbnail.svg" alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">
+                <p>This is the dumb text of thumbnail {{ i }}.</p>
+                <p> Yeah nothing special here... I'm deeply sorry for your loss... of time (hey it's a pun).</p>
+             </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
+                <small class="text-muted">9 mins</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        % end
+      </div>
+    </div>
+    </div>
+</div>

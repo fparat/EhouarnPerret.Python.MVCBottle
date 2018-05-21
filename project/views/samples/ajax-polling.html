@@ -1,0 +1,120 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">AJAX Polling</h1>
+          <p class="lead">A Simple Useless Example</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="api">
+        <div id="api-data">
+        </div>
+        <div id="api-loading" class="text-center overlay">
+          <span class="fa-stack fa-lg yellow" style="font-size: 64px;">
+           <i class="fa fa-circle fa-stack-2x"></i>
+           <i class="fa fa-cog fa-spin fa-stack-1x fa-fw black"></i>
+          </span>
+        </div>
+        <div id="api-error" class="red">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+function safeSetInterval(f, delay) {
+  var timerId = setTimeout(function tick() {
+    f();
+    timerId = setTimeout(tick, delay);
+  }, 2000);
+}
+
+$(function() {
+
+    hideApiData();
+    showApiLoading();
+    safeSetInterval(reloadData, 1000);
+
+    function reloadData() {
+      NProgress.start();
+      $.ajax({
+        type: 'GET',
+        url: '/api/samples',
+        dataType: 'json',
+        timeout: 2000,
+        success: onReloadDataSuccess,
+        error: onReloadDataError,
+        complete: onReloadDataComplete
+      });
+    }
+
+    function hideId(id) {
+        if ($(id).is(':visible')) {
+          $(id).fadeOut();
+      }
+    }
+    function showId(id) {
+        if ($(id).is(':hidden')) {
+          $(id).fadeIn();
+      }
+    }
+
+    function hideApiLoading() {
+      hideId("#api-loading");
+    }
+    function showApiLoading() {
+      showId("#api-loading");
+    }
+
+    function hideApiData() {
+      hideId("#api-data");
+    }
+    function showApiData() {
+      showId("#api-data");
+    }
+
+    function hideApiError() {
+        hideId("#api-error");
+    }
+    function showApiError() {
+        showId("#api-error");
+    }
+
+    function onReloadDataSuccess(data) {
+      $('#api-data').html(data);
+      showApiData();
+      hideApiLoading();
+      hideApiError();
+    }
+    function onReloadDataError(xhr, textStatus, error) {
+      hideApiLoading();
+      var e =
+          '<div class="alert alert-danger mt-4" role="alert">'+
+          '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+          '<span aria-hidden="true">&times;</span>' +
+          '</button>' +
+          '<h4 class="alert-heading">Error</h4>' +
+          '<hr>' +
+          '<ul>' +
+          '<li>Date: ' + new Date().toISOString() + '</li>' +
+          '<li>XHR: ' + JSON.stringify(xhr) + '</li>' +
+          '<li>Status: ' + textStatus + '</li>' +
+          '<li>Error: ' + error + '</li>' +
+          '</ul>' +
+          '</div>';
+      $('#api-error').html(e);
+      showApiError();
+    }
+    function onReloadDataComplete(jqXHR, textStatus ) {
+        NProgress.done();
+    }
+});
+</script>
