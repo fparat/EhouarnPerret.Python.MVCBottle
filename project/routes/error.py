@@ -5,7 +5,7 @@ from runserver import app
 
 @app.error(404)
 def on_error404(error):
-    simple_redirect('/404', 303)
+    return simple_redirect('/404', 303)
 
 
 @app.get('/404')

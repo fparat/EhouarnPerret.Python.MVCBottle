@@ -26,7 +26,7 @@ def samples():
     return json.dumps(cells)
 
 
-@route('/upload', method='POST')
+@app.post('/upload')
 def do_upload():
     category = request.forms.get('category')
     upload = request.files.get('upload')
